@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.SmartDevice.Connectivity;
+using Microsoft.SmartDevice.Connectivity.Interface;
 
 namespace IsoStoreSpy.ViewModels
 {
@@ -18,7 +19,7 @@ namespace IsoStoreSpy.ViewModels
         /// propriété Application :  
         /// </summary>
 
-        public RemoteApplication Application
+        public IRemoteApplication Application
         {
             get
             {
@@ -35,7 +36,7 @@ namespace IsoStoreSpy.ViewModels
             }
         }
 
-        private RemoteApplication _Application = null;
+        private IRemoteApplication _Application = null;
 
         /// <summary>
         /// Nom de la propriété Title

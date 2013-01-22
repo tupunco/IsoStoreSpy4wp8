@@ -1,10 +1,7 @@
-﻿using System;
+﻿using IsoStoreSpy.Plugins.Shared;
+using Microsoft.SmartDevice.Connectivity;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Tools;
 
 namespace IsoStoreSpy.ViewModels
 {
@@ -99,9 +96,9 @@ namespace IsoStoreSpy.ViewModels
 
                 if (this.SelectedDevice != null)
                 {
-                    List<RemoteApplication> applications = RemoteIsolatedStoreTools.GetAllApplications(this.SelectedDevice.DeviceType);
+                    var applications = RemoteIsolatedStoreTools.GetAllApplications(this.SelectedDevice.DeviceId);
 
-                    foreach (RemoteApplication application in applications)
+                    foreach (var application in applications)
                     {
                         result.Add(new RemoteApplicationViewModel()
                             {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.SmartDevice.Connectivity;
-using System.Collections.ObjectModel;
+﻿using IsoStoreSpy.Plugins.Shared;
 using IsoStoreSpy.Tools;
+using Microsoft.SmartDevice.Connectivity;
+using Microsoft.SmartDevice.Connectivity.Interface;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Collections;
 
 namespace IsoStoreSpy.ViewModels
 {
@@ -25,7 +22,7 @@ namespace IsoStoreSpy.ViewModels
         /// <summary>
         /// Temporaire
         /// </summary>
-        
+
         public string Id
         {
             get;
@@ -36,7 +33,7 @@ namespace IsoStoreSpy.ViewModels
         /// Constructeur
         /// </summary>
         /// <param name="parent"></param>
-        
+
         public RemoteFileInfoViewModel(RemoteFileInfoViewModel parent)
         {
             this.Parent = parent;
@@ -61,10 +58,9 @@ namespace IsoStoreSpy.ViewModels
         public const string RemoteFileInfoPropertyName = "RemoteFileInfo";
 
         /// <summary>
-        /// propriété RemoteFileInfo :  
+        /// propriété IRemoteFileInfo :  
         /// </summary>
-
-        public RemoteFileInfo RemoteFileInfo
+        public IRemoteFileInfo RemoteFileInfo
         {
             get
             {
@@ -82,9 +78,9 @@ namespace IsoStoreSpy.ViewModels
             }
         }
 
-        private RemoteFileInfo _RemoteFileInfo = null;
+        private IRemoteFileInfo _RemoteFileInfo = null;
 
-        
+
         /// <summary>
         /// Nom de la propriété Parent
         /// </summary>
@@ -121,7 +117,7 @@ namespace IsoStoreSpy.ViewModels
 
         public FileStream Download()
         {
-            return RemoteIsolatedStoreTools.LoadFile( IsoStoreSpyViewModel.ApplicationViewModel.SelectedRemoteApplication.Application, this.RemoteFileInfo, IsoStoreSpyViewModel.TempDirectory);
+            return RemoteIsolatedStoreTools.LoadFile(IsoStoreSpyViewModel.ApplicationViewModel.SelectedRemoteApplication.Application, this.RemoteFileInfo, IsoStoreSpyViewModel.TempDirectory);
         }
 
         /// <summary>
@@ -159,7 +155,7 @@ namespace IsoStoreSpy.ViewModels
                 }
             }
         }
-        
+
         /// <summary>
         /// Nom de la propriété Size
         /// </summary>
@@ -188,7 +184,7 @@ namespace IsoStoreSpy.ViewModels
             }
         }
 
-        
+
         /// <summary>
         /// Nom de la propriété ModificationDateString
         /// </summary>
@@ -205,7 +201,8 @@ namespace IsoStoreSpy.ViewModels
             {
                 if (this.RemoteFileInfo != null)
                 {
-                    return DateConverter.FormatDate(this.RemoteFileInfo.LastWriteTime);
+                    //TODO ModificationDateString
+                    //return DateConverter.FormatDate(this.RemoteFileInfo.LastWriteTime);
                 }
 
                 return null;
@@ -233,7 +230,8 @@ namespace IsoStoreSpy.ViewModels
             {
                 if (this.RemoteFileInfo != null)
                 {
-                    return DateConverter.FormatDate(this.RemoteFileInfo.LastAccessTime);
+                    //TODO AccessDateString
+                    //return DateConverter.FormatDate(this.RemoteFileInfo.LastAccessTime);
                 }
 
                 return null;
@@ -261,7 +259,8 @@ namespace IsoStoreSpy.ViewModels
             {
                 if (this.RemoteFileInfo != null)
                 {
-                    return DateConverter.FormatDate(this.RemoteFileInfo.CreationTime);
+                    //TODO CreationDateString
+                    //return DateConverter.FormatDate(this.RemoteFileInfo.CreationTime);
                 }
 
                 return null;
@@ -277,13 +276,13 @@ namespace IsoStoreSpy.ViewModels
         /// Nom de la propriété ImageSource
         /// </summary>
 
-        public const string  ImageSourcePropertyName = " ImageSource";
+        public const string ImageSourcePropertyName = " ImageSource";
 
         /// <summary>
         /// propriété  ImageSource :  
         /// </summary>
 
-        public string  ImageSource
+        public string ImageSource
         {
             get
             {
@@ -329,7 +328,7 @@ namespace IsoStoreSpy.ViewModels
                     else
                     {
                         string shortName = this.ShortName.Trim();
-                        string extension = Path.GetExtension( shortName );
+                        string extension = Path.GetExtension(shortName);
 
                         switch (extension)
                         {
@@ -449,7 +448,7 @@ namespace IsoStoreSpy.ViewModels
 
         private ObservableCollection<RemoteFileInfoViewModel> _Children = new ObservableCollection<RemoteFileInfoViewModel>();
 
-        
+
         /// <summary>
         /// Nom de la propriété FilesAndDirectories
         /// </summary>
@@ -501,9 +500,9 @@ namespace IsoStoreSpy.ViewModels
                 if (this._SelectedFiles != value)
                 {
                     this._SelectedFiles = value;
-                    
+
                     this.RaisePropertyChanged(SelectedFilesPropertyName);
-                    
+
                     RemoteFileInfoViewModel.IsoStoreSpyViewModel.SelectedFiles = value;
                 }
             }
@@ -516,8 +515,7 @@ namespace IsoStoreSpy.ViewModels
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
-
-        public string GetSearchPattern( ApplicationViewModel application )
+        public string GetSearchPattern(ApplicationViewModel application)
         {
             if (application != null && application.SelectedRemoteApplication != null)
             {
@@ -527,7 +525,7 @@ namespace IsoStoreSpy.ViewModels
             return null;
         }
 
-        
+
         /// <summary>
         /// Contenu
         /// </summary>

@@ -9,6 +9,7 @@ using IsoStoreSpy.Tools;
 using System.IO;
 using System.Collections;
 using IsoStoreSpy.Plugins.Shared;
+using Microsoft.SmartDevice.Connectivity.Interface;
 
 namespace IsoStoreSpy.ViewModels
 {
@@ -348,7 +349,7 @@ namespace IsoStoreSpy.ViewModels
         /// Selected IsolatedStore
         /// </summary>
 
-        private RemoteIsolatedStorageFile SelectedIsolatedStore
+        private IRemoteIsolatedStorageFile SelectedIsolatedStore
         {
             get
             {
@@ -374,9 +375,9 @@ namespace IsoStoreSpy.ViewModels
             {
                 string searchPattern = parent.GetSearchPattern(this.ApplicationViewModel);
 
-                List<RemoteFileInfo> remoteFileInfos = RemoteIsolatedStoreTools.GetRemoteFileInfos(this.ApplicationViewModel.SelectedRemoteApplication.Application, searchPattern, isDirectoryPattern);
+                var remoteFileInfos = RemoteIsolatedStoreTools.GetRemoteFileInfos(this.ApplicationViewModel.SelectedRemoteApplication.Application, searchPattern, isDirectoryPattern);
 
-                foreach (RemoteFileInfo remoteFileInfo in remoteFileInfos)
+                foreach (var remoteFileInfo in remoteFileInfos)
                 {
                     result.Add(new RemoteFileInfoViewModel(parent)
                         {
@@ -403,13 +404,13 @@ namespace IsoStoreSpy.ViewModels
 
             if (this.ApplicationViewModel != null && this.ApplicationViewModel.SelectedRemoteApplication != null)
             {
-                RemoteApplication application = this.ApplicationViewModel.SelectedRemoteApplication.Application;
-                RemoteFileInfo directoryParent = this.SelectedDirectory.RemoteFileInfo;
+                var application = this.ApplicationViewModel.SelectedRemoteApplication.Application;
+                var directoryParent = this.SelectedDirectory.RemoteFileInfo;
 
                 if (RemoteIsolatedStoreTools.Exists(application, directoryParent, newDirectoryName) == false)
                 {
-                    RemoteFileInfo newDirectory = RemoteIsolatedStoreTools.CreateDirectory(application, directoryParent, newDirectoryName);
-                    RemoteFileInfoViewModel newDirectoryViewModel = new RemoteFileInfoViewModel(this.SelectedDirectory) { RemoteFileInfo = newDirectory };
+                    var newDirectory = RemoteIsolatedStoreTools.CreateDirectory(application, directoryParent, newDirectoryName);
+                    var newDirectoryViewModel = new RemoteFileInfoViewModel(this.SelectedDirectory) { RemoteFileInfo = newDirectory };
                     
                     this.SelectedDirectory.Children.Add( newDirectoryViewModel );
                 
@@ -449,7 +450,7 @@ namespace IsoStoreSpy.ViewModels
                 {
                     foreach (RemoteFileInfoViewModel selectedFileInfo in selectedFiles)
                     {
-                        RemoteFileInfo file = selectedFileInfo.RemoteFileInfo;
+                        var file = selectedFileInfo.RemoteFileInfo;
 
                         RemoteIsolatedStoreTools.DeleteDirectoryOrFile(this.ApplicationViewModel.SelectedRemoteApplication.Application, file);
 

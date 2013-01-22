@@ -1,15 +1,16 @@
-﻿using System.Windows;
+﻿using IsoStoreSpy.Properties;
 using IsoStoreSpy.ViewModels;
-using System.Windows.Media.Animation;
-using System.Windows.Controls;
-using Forms = System.Windows.Forms;
+
 using Microsoft.Win32;
 using System;
-using System.Windows.Media;
-using IsoStoreSpy.Properties;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using Forms = System.Windows.Forms;
 
 namespace IsoStoreSpy
 {
@@ -53,12 +54,12 @@ namespace IsoStoreSpy
         {
             switch (e.PropertyName)
             {
-                case IsoStoreSpyViewModel.SelectedFilesPropertyName :
-                
+                case IsoStoreSpyViewModel.SelectedFilesPropertyName:
+
                     this.AnimateFileInformation();
                     break;
-                
-                case IsoStoreSpyViewModel.SelectedDirectoryPropertyName :
+
+                case IsoStoreSpyViewModel.SelectedDirectoryPropertyName:
 
                     this.AnimateFileInformation();
                     break;
@@ -68,7 +69,6 @@ namespace IsoStoreSpy
         /// <summary>
         /// Animation du panel d'information sur les fichiers selectionnés
         /// </summary>
-
         private void AnimateFileInformation()
         {
             bool newFile = false;
@@ -131,7 +131,7 @@ namespace IsoStoreSpy
         private void ButtonApplicationsClick(object sender, RoutedEventArgs e)
         {
             WindowApplications windowApplications = new WindowApplications();
-
+            windowApplications.Owner = this;
             if (windowApplications.ShowDialog() == true)
             {
                 // Remplacement 
@@ -163,9 +163,9 @@ namespace IsoStoreSpy
             {
                 App.IsoStoreSpyViewModel.RefreshSelectedDirectory();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                App.ShowError(ex.Message); 
+                App.ShowError(ex.Message);
             }
         }
 
@@ -178,14 +178,14 @@ namespace IsoStoreSpy
         private void NewDirectory_Click(object sender, RoutedEventArgs e)
         {
             WindowFolderName window = new WindowFolderName();
-
+            window.Owner = this;
             if (window.ShowDialog() == true)
             {
                 RemoteFileInfoViewModel newDirectory = App.IsoStoreSpyViewModel.CreateDirectory(window.FolderName);
-                
-                if( newDirectory != null )
+
+                if (newDirectory != null)
                 {
-                    TreeViewItem rootItem = this.TreeView.ItemContainerGenerator.ContainerFromItem( newDirectory.Parent ) as TreeViewItem;
+                    TreeViewItem rootItem = this.TreeView.ItemContainerGenerator.ContainerFromItem(newDirectory.Parent) as TreeViewItem;
 
                     if (rootItem != null)
                     {
@@ -217,7 +217,7 @@ namespace IsoStoreSpy
 
         private void DropFileFromWindows(object sender, DragEventArgs e)
         {
-            if (e.Data is System.Windows.DataObject &&  ((System.Windows.DataObject)e.Data).ContainsFileDropList())  
+            if (e.Data is System.Windows.DataObject && ((System.Windows.DataObject)e.Data).ContainsFileDropList())
             {
                 this.StartLongOperation();
 
@@ -233,7 +233,7 @@ namespace IsoStoreSpy
                 {
                     this.StopLongOperation();
                 }
-            }     
+            }
         }
 
         /// <summary>
@@ -250,11 +250,11 @@ namespace IsoStoreSpy
             dialog.Description = "Choose the desktop's folder where you want to download the selected folder of the phone.";
             dialog.SelectedPath = Settings.SelectedPath;
 
-            if ( dialog.ShowDialog() == Forms.DialogResult.OK )
+            if (dialog.ShowDialog() == Forms.DialogResult.OK)
             {
                 Settings.SelectedPath = dialog.SelectedPath;
                 Settings.Save();
-                
+
                 this.StartLongOperation();
 
                 new Thread(new ThreadStart(() =>
@@ -263,7 +263,7 @@ namespace IsoStoreSpy
                     this.StopLongOperation();
 
                 })).Start();
-            
+
             }
         }
 
@@ -285,7 +285,7 @@ namespace IsoStoreSpy
             {
                 Settings.SelectedPath = dialog.SelectedPath;
                 Settings.Save();
-                
+
                 this.StartLongOperation();
 
                 new Thread(new ThreadStart(() =>
@@ -294,7 +294,7 @@ namespace IsoStoreSpy
                     this.StopLongOperation();
 
                 })).Start();
-            
+
             }
         }
 
@@ -324,7 +324,7 @@ namespace IsoStoreSpy
                     this.StopLongOperation();
 
                 })).Start();
-            
+
             }
         }
 
@@ -363,11 +363,11 @@ namespace IsoStoreSpy
 
                 this.StartLongOperation();
 
-                new Thread( new ThreadStart( () => 
-                {                
+                new Thread(new ThreadStart(() =>
+                {
                     App.IsoStoreSpyViewModel.DownloadFromSelectedFiles(dialog.SelectedPath);
                     this.StopLongOperation();
-                
+
                 })).Start();
             }
         }
@@ -407,7 +407,7 @@ namespace IsoStoreSpy
             {
                 this.AnimateEye(e, this.BigEye, this.ScaleBigEye);
             }
-            
+
             this.AnimateEye(e, this.SmallEye, this.ScaleSmallEye);
         }
 
@@ -473,11 +473,11 @@ namespace IsoStoreSpy
                 this.timer = null;
             }
 
-            this.timer = new Timer( (object s) =>
+            this.timer = new Timer((object s) =>
             {
                 this.timer.Dispose();
                 this.timer = null;
-                
+
                 RemoteFileInfoViewModel fileInfo = App.IsoStoreSpyViewModel.SelectedFile;
 
                 if (fileInfo != null)
@@ -487,11 +487,11 @@ namespace IsoStoreSpy
                         App.IsoStoreSpyViewModel.SetContentFromSelectedFile();
                     }));
                 }
-            }, 
-            null, 
-            1 * 1000, 
+            },
+            null,
+            1 * 1000,
             Timeout.Infinite
-            ); 
+            );
         }
 
         Timer timer = null;

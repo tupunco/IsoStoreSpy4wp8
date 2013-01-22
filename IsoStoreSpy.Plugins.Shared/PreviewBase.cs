@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Tools;
+﻿using Microsoft.SmartDevice.Connectivity.Interface;
+
 using System.IO;
 
 namespace IsoStoreSpy.Plugins.Shared
@@ -37,7 +33,7 @@ namespace IsoStoreSpy.Plugins.Shared
         /// <param name="fileInfo"></param>
         /// <returns></returns>
 
-        protected bool CheckExtension(string extension, RemoteFileInfo fileInfo)
+        protected bool CheckExtension(string extension, IRemoteFileInfo fileInfo)
         {
             string name = RemoteIsolatedStoreTools.GetShortName(fileInfo);
 
@@ -50,8 +46,7 @@ namespace IsoStoreSpy.Plugins.Shared
         /// <param name="extensions"></param>
         /// <param name="fileInfo"></param>
         /// <returns></returns>
-
-        protected bool CheckExtensions(string[] extensions, RemoteFileInfo fileInfo)
+        protected bool CheckExtensions(string[] extensions, IRemoteFileInfo fileInfo)
         {
             foreach (string extension in extensions)
             {

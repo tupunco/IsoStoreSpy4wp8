@@ -1,25 +1,22 @@
-﻿using System;
+﻿using IsoStoreSpy.Plugins.Shared;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
-using IsoStoreSpy.Tools;
+using System.Globalization;
+using System.Linq;
 
 namespace IsoStoreSpy.ViewModels
 {
     public class DeviceViewModel : BaseViewModel
     {
-        
+
         /// <summary>
         /// Nom de la propriété DeviceType
         /// </summary>
-
         public const string DeviceTypePropertyName = "DeviceType";
 
         /// <summary>
         /// propriété DeviceType :  
         /// </summary>
-
         public DeviceTypes DeviceType
         {
             get
@@ -39,17 +36,18 @@ namespace IsoStoreSpy.ViewModels
 
         private DeviceTypes _DeviceType = DeviceTypes.None;
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DeviceId { get; set; }
+
         /// <summary>
         /// Nom de la propriété Name
         /// </summary>
-
         public const string NamePropertyName = "Name";
-
         /// <summary>
         /// propriété Name :  
         /// </summary>
-
         public string Name
         {
             get
@@ -103,23 +101,30 @@ namespace IsoStoreSpy.ViewModels
         /// Creation des Devices
         /// </summary>
         /// <returns></returns>
-
         private static ObservableCollection<DeviceViewModel> CreateDeviceViewModels()
         {
-            ObservableCollection<DeviceViewModel> result = new ObservableCollection<DeviceViewModel>();
-            Array values = Enum.GetValues(typeof(DeviceTypes));
+            return new ObservableCollection<DeviceViewModel>(GetDevices());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static DeviceViewModel[] GetDevices()
+        {
+            var list = new List<DeviceViewModel>();
+            var devices = RemoteIsolatedStoreTools.GetDevices(CultureInfo.CurrentUICulture.LCID);
+            list.Add(new DeviceViewModel() { _DeviceType = DeviceTypes.None, Name = "None" });
 
-            foreach (DeviceTypes value in values)
+            foreach (var current in devices)
             {
-                result.Add(new DeviceViewModel()
-                {
-                    _DeviceType = value,
-                    Name = value.ToString()
-                }
-                );
+                var c = new DeviceViewModel() { DeviceId = current.Id, Name = current.Name };
+                if (current.IsEmulator())
+                    c._DeviceType = DeviceTypes.Emulator;
+                else
+                    c._DeviceType = DeviceTypes.Device;
+                list.Add(c);
             }
-
-            return result;
+            return list.ToArray();
         }
     }
 }

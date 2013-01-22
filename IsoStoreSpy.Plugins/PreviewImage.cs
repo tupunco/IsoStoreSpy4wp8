@@ -1,14 +1,13 @@
-﻿using System;
+﻿using IsoStoreSpy.Plugins.Controls;
 using IsoStoreSpy.Plugins.Shared;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Plugins.Controls;
-using System.Windows.Controls;
+
+using Microsoft.SmartDevice.Connectivity.Interface;
+
+using System;
 using System.IO;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Media;
 
 namespace IsoStoreSpy.Plugins
 {
@@ -20,7 +19,7 @@ namespace IsoStoreSpy.Plugins
         /// <param name="fileInfo"></param>
         /// <returns></returns>
 
-        public bool CheckFileInfoIsSupported(RemoteFileInfo fileInfo)
+        public bool CheckFileInfoIsSupported(IRemoteFileInfo fileInfo)
         {
             return this.CheckExtensions(new string[]{".jpg",".png",".gif",".bmp",".ico"}, fileInfo); 
         }

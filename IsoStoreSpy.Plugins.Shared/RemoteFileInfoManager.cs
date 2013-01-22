@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.SmartDevice.Connectivity.Interface;
+
 using System.IO;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Tools;
 
 namespace IsoStoreSpy.Plugins.Shared
 {
@@ -24,8 +20,7 @@ namespace IsoStoreSpy.Plugins.Shared
         /// Constructeur
         /// </summary>
         /// <param name="fileInfo"></param>
-
-        public RemoteFileInfoManager(RemoteApplication application, RemoteFileInfo fileInfo, string tempDirectory)
+        public RemoteFileInfoManager(IRemoteApplication application, IRemoteFileInfo fileInfo, string tempDirectory)
         {
             this.RemoteFileInfo = fileInfo;
             this.TempDirectory = tempDirectory;
@@ -35,7 +30,6 @@ namespace IsoStoreSpy.Plugins.Shared
         /// <summary>
         /// Repertoire temporaire
         /// </summary>
-
         public string TempDirectory
         {
             get;
@@ -45,8 +39,7 @@ namespace IsoStoreSpy.Plugins.Shared
         /// <summary>
         /// RemoteFileInfo
         /// </summary>
-
-        public RemoteFileInfo RemoteFileInfo
+        public IRemoteFileInfo RemoteFileInfo
         {
             get;
             private set;
@@ -55,8 +48,7 @@ namespace IsoStoreSpy.Plugins.Shared
         /// <summary>
         /// RemoteApplication
         /// </summary>
-
-        public RemoteApplication RemoteApplication
+        public IRemoteApplication RemoteApplication
         {
             get;
             private set;
@@ -78,10 +70,9 @@ namespace IsoStoreSpy.Plugins.Shared
         /// Sauvegarde
         /// </summary>
         /// <param name="stream"></param>
-
         public void Save(string fileName)
         {
-            RemoteFileInfo directory = RemoteIsolatedStoreTools.GetParentDirectory(this.RemoteApplication, this.RemoteFileInfo);
+            IRemoteFileInfo directory = RemoteIsolatedStoreTools.GetParentDirectory(this.RemoteApplication, this.RemoteFileInfo);
             RemoteIsolatedStoreTools.UploadFileToDevice(this.RemoteApplication, directory, fileName);
         }
 
@@ -94,7 +85,6 @@ namespace IsoStoreSpy.Plugins.Shared
         /// Telechargement du fichier
         /// </summary>
         /// <returns></returns>
-
         public string Load()
         {
             RemoteIsolatedStoreTools.DownloadFileFromDevice(this.RemoteApplication, this.RemoteFileInfo, this.TempDirectory);

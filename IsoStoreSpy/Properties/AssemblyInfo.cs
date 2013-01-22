@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IsoStoreSpy")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("IsoStoreSpy4wp8")]
+[assembly: AssemblyDescription("IsoStoreSpy4wp8")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("IsoStoreSpy")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCompany("TUPUNCO")]
+[assembly: AssemblyProduct("IsoStoreSpy4wp8")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using IsoStoreSpy.Plugins;
 using IsoStoreSpy.ViewModels;
-using IsoStoreSpy.Plugins;
-using IsoStoreSpy.Plugins.Shared;
+
+using System.Windows;
 
 namespace IsoStoreSpy
 {
@@ -19,7 +14,7 @@ namespace IsoStoreSpy
         {
             IsoStoreSpyViewModel = new IsoStoreSpyViewModel();
 
-            IsoStoreSpyViewModel.Plugins.Add( new PreviewText() );
+            IsoStoreSpyViewModel.Plugins.Add(new PreviewText());
             IsoStoreSpyViewModel.Plugins.Add(new PreviewImage());
             IsoStoreSpyViewModel.Plugins.Add(new PreviewDatabase());
         }

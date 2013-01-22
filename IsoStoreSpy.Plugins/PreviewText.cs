@@ -1,13 +1,12 @@
-﻿using System;
+﻿using IsoStoreSpy.Plugins.Controls;
 using IsoStoreSpy.Plugins.Shared;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Plugins.Controls;
-using System.Windows.Controls;
+
+using Microsoft.SmartDevice.Connectivity.Interface;
+
+using System;
 using System.IO;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows;
-using IsoStoreSpy.Tools;
 
 namespace IsoStoreSpy.Plugins
 {
@@ -18,8 +17,7 @@ namespace IsoStoreSpy.Plugins
         /// </summary>
         /// <param name="fileInfo"></param>
         /// <returns></returns>
-
-        public bool CheckFileInfoIsSupported(RemoteFileInfo fileInfo)
+        public bool CheckFileInfoIsSupported(IRemoteFileInfo fileInfo)
         {
             string filename = RemoteIsolatedStoreTools.GetShortName(fileInfo);
 
@@ -35,7 +33,6 @@ namespace IsoStoreSpy.Plugins
         /// Initialisation
         /// </summary>
         /// <param name="manager"></param>
-
         public IPreviewControl Initialize(RemoteFileInfoManager manager )
         {
             this.Manager = manager;
@@ -53,6 +50,8 @@ namespace IsoStoreSpy.Plugins
                     using (StreamReader reader = new StreamReader(manager.Load()))
                     {
                         string text = reader.ReadToEnd();
+                        if (text.Length > 200)
+                            text = text.Substring(0, 200) + "\r\n...";
 
                         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {

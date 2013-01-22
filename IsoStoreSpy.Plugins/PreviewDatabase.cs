@@ -1,16 +1,14 @@
-﻿using System;
+﻿using IsoStoreSpy.Plugins.Controls;
 using IsoStoreSpy.Plugins.Shared;
-using Microsoft.SmartDevice.Connectivity;
-using IsoStoreSpy.Plugins.Controls;
-using System.Windows.Controls;
+
+using Microsoft.SmartDevice.Connectivity.Interface;
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlServerCe;
 using System.IO;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows;
-using IsoStoreSpy.Tools;
-using System.Data.SqlClient;
-using System.Data.SqlServerCe;
-using System.Collections.Generic;
 
 namespace IsoStoreSpy.Plugins
 {
@@ -22,7 +20,7 @@ namespace IsoStoreSpy.Plugins
         /// <param name="fileInfo"></param>
         /// <returns></returns>
 
-        public bool CheckFileInfoIsSupported(RemoteFileInfo fileInfo)
+        public bool CheckFileInfoIsSupported(IRemoteFileInfo fileInfo)
         {
             return this.CheckExtension(".sdf", fileInfo); 
         }
