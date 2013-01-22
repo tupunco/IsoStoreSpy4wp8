@@ -1,0 +1,73 @@
+﻿<UserControl 
+             xmlns:my="clr-namespace:IsoStoreSpy.Plugins.Shared.Controls;assembly=IsoStoreSpy.Plugins.Shared"
+             x:Class="IsoStoreSpy.Plugins.Controls.PreviewDatabaseControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+
+             d:DesignWidth="500" d:DesignHeight="400"
+             >
+    <Grid Margin="5">
+    
+        <Grid.Resources>
+            <Style x:Key="TitleForm" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5,5,5,5"></Setter>
+                <Setter Property="FontSize" Value="20"></Setter>
+                <Setter Property="Foreground" Value="DarkGray"></Setter>
+                <Setter Property="Opacity" Value="0.75"></Setter>
+            </Style>
+
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,5,10,10" >
+            
+            <TextBlock DockPanel.Dock="Left" Text="Tables" Style="{StaticResource TitleForm}"></TextBlock>
+            <my:MetroButton HorizontalAlignment="Right" DockPanel.Dock="Right" IconSource="/IsoStoreSpy.Plugins;component/Images/Play.png" Content="Sql" ToolTip="Execute a Sql Query" Click="ExecuteButton_Click" />
+            <my:MetroButton HorizontalAlignment="Right" DockPanel.Dock="Right" IconSource="/IsoStoreSpy.Plugins;component/Images/Save.png" Content="Save" ToolTip="Save your change in the database of the phone" Margin="5,0,10,0" Click="SaveButton_Click" />
+        </DockPanel>
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable, Mode=TwoWay}" BorderBrush="LightGray" Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+                
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="Transparent">
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="48" Margin="5,10" Source="/IsoStoreSpy.Plugins;component/Images/Table.png"></Image>
+
+                            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"  Margin="0,0,5,0" Text="{Binding}" FontSize="20" ToolTip="{Binding}"></TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="LightGray" Text="Table name" Margin="0,0,5,0"></TextBlock>
+                            
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+    </Grid>
+</UserControl>

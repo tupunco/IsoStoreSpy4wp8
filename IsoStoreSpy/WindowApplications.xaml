@@ -1,0 +1,72 @@
+﻿<Window 
+    x:Class="IsoStoreSpy.WindowApplications"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:IsoStoreSpy.Plugins.Shared.Controls;assembly=IsoStoreSpy.Plugins.Shared"
+    Title="IsoStoreSpy for Windows Phone" Height="458" Width="401" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" Icon="/IsoStoreSpy;component/Logo.ico">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            
+            <TextBlock Text="choose an application" Foreground="DarkGray" FontFamily="Segoe UI" FontSize="30"></TextBlock>
+            <TextBlock Margin="10,5,10,5" Text="Choose the device you want to explore then select a phone application. Applications downloaded from marketplace are not listed. Only ProductID is shown as label (this is a restriction of the connectivity library). You could find the productID of your application in the file WMAppManifest.xml of your project." TextWrapping="Wrap" Foreground="DarkGray" FontFamily="Segoe UI" ></TextBlock>
+
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="ComboBoxDevice" Margin="10" Height="32" VerticalContentAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding ApplicationViewModel.Devices}" SelectedItem="{Binding ApplicationViewModel.SelectedDevice, Mode=TwoWay}" SelectionChanged="Device_SelectionChanged">
+            </ComboBox>
+            
+            <my:MetroButton Grid.Column="1" IconSource="Images/Refresh.png" Margin="0,0,0,0" Click="RefreshApplication_Click" />
+        </Grid>
+
+        <ListBox Grid.Row="2" BorderThickness="1" BorderBrush="LightGray" Margin="5" ItemsSource="{Binding ApplicationViewModel.RemoteApplications}" SelectedItem="{Binding ApplicationViewModel.SelectedRemoteApplication, Mode=TwoWay}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Width="32" Margin="5,10" Source="Images\ApplicationIcon.jpg"></Image>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <Grid Margin="0,0,5,0">
+                                <!--<TextBox Margin="5" Visibility="Collapsed" Text="{Binding Title, Mode=TwoWay}"></TextBox>-->
+                                <TextBlock Foreground="LightGray" Text="ProductID"></TextBlock>
+                            </Grid>
+                            <TextBlock Foreground="DarkGray" Text="{Binding Application.ProductID}"></TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="10" >
+            <my:MetroButton Content="Select" IconSource="Images/Ok.png" Margin="20,0,0,0" Click="Select_Click" />
+            <my:MetroButton Content="Cancel" IconSource="Images/Cancel.png" Margin="20,0,0,0" Click="Cancel_Click" />
+        </StackPanel>
+
+    </Grid>
+</Window>

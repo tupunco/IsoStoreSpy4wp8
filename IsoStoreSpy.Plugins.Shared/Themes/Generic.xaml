@@ -1,0 +1,62 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:IsoStoreSpy.Plugins.Shared.Controls"
+    >
+    <Style TargetType="{x:Type local:MetroButton}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MetroButton}">
+
+                    <Grid Cursor="Hand" Background="Transparent">
+
+                        <Grid.BitmapEffect>
+                            <DropShadowBitmapEffect Color="Transparent" ShadowDepth="0" x:Name="DropShadow"></DropShadowBitmapEffect>
+                        </Grid.BitmapEffect>
+
+                        <StackPanel Orientation="Horizontal" Opacity="0.5">
+
+                            <Grid VerticalAlignment="Center">
+                                <Image Width="32" Height="32" Source="/IsoStoreSpy.Plugins.Shared;component/Images/Circle.png" ></Image>
+                                <Image Width="32" Height="32" Source="{TemplateBinding IconSource}" ></Image>
+                            </Grid>
+
+                            <ContentControl x:Name="ContentButton" Content="{TemplateBinding Content}" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" FontFamily="Segoe UI" FontWeight="Bold"></ContentControl>
+
+                        </StackPanel>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="DodgerBlue" Duration="0:0:0.3" Storyboard.TargetName="DropShadow" Storyboard.TargetProperty="Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Transparent" Duration="0:0:0.1" Storyboard.TargetName="DropShadow" Storyboard.TargetProperty="Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,10 @@
+*.suo
+*.vssscc
+*.scc
+*.user
+/*/Bin/*
+/*/obj/*
+/*/*.suo
+/*/*.vssscc
+/*/*.scc
+/*/*.user
